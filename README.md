@@ -1,7 +1,7 @@
 # RobotronRetroGames
 Robotron Retro Games
 
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/RFYjQs4Jr7Q/0.jpg)](https://www.youtube.com/watch?v=RFYjQs4Jr7Q)
+[![Leiter Retro Game](https://img.youtube.com/vi/GQd6qXibzm0/0.jpg)](https://www.youtube.com/watch?v=GQd6qXibzm0)
 
 Play It: https://dfriedenberger.github.io/RobotronRetroGames
 
