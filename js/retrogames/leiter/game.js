@@ -1,4 +1,5 @@
 $( document ).ready(function() {
+
     console.log( "ready!" );
 
     var screen = new Screen('#screen');
@@ -14,7 +15,10 @@ $( document ).ready(function() {
             e.preventDefault();
     });
 
-    var model = new Model(leiter_level_1);
+    var model = new Model(level_easystreet);
+
+
+    var barrelStrategy = new BarrelStrategy(model);
 
     model.setPlayer(new Player(model.getStart()))
 
@@ -49,7 +53,7 @@ $( document ).ready(function() {
             switch(field)
             {
                 case 'H':
-                case '@':
+                case '$':
                     return true;
                 default:
                     return false;
@@ -101,20 +105,19 @@ $( document ).ready(function() {
         //move person
         var player = model.getPlayer();
         var ppos = player.getPosition();
-        
-        var goal = model.getGoal();
-        if(ppos.x == goal.x && ppos.y == goal.y)
-        {
-            model.setMessage("Gewonnen");
-            screen.printLines(model.getLines());
-            return;
-        }
-
+  
         var field = model.getField(ppos);
         if(field == '&')
         {
             model.setField(ppos,' ');
             model.addPoints(300);
+        }
+
+        if(field == '$')
+        {
+            model.setMessage("Gewonnen");
+            screen.printLines(model.getLines());
+            return;
         }
 
         var platformpos = { x: ppos.x, y: ppos.y + 1};
@@ -232,13 +235,8 @@ $( document ).ready(function() {
         
         check();
 
-        //delete barrels
-        model.deleteBarrels(function(barrel) {
-            var pos = barrel.getPosition();
-            var field = model.getField(pos);
-            if(field == '*') return true;
-            return false;
-        });
+
+        barrelStrategy.cleanUpBarrels();
 
         //move barrels
         model.getBarrels().forEach(function(barrel) {
@@ -305,11 +303,11 @@ $( document ).ready(function() {
 
         })
         //create Sbarrels
-        if(model.getBarrels().length < 10)
+        if(model.getBarrels().length < model.getMaxBarrels())
         {
             model.getSources().forEach(function (source) {
                 var r = Math.random();
-                if(r < 0.95) return;
+                if(r > model.getBarrelPosibility()) return;
                 model.addBarrel(new Barrel(source));
             });
         }

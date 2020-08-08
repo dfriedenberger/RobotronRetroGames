@@ -6,7 +6,7 @@ class Model {
       this.barrels = [];
       this.player = undefined;
       this.message = undefined;
-      this.omas = level.lives;
+      this.omas   = 4;
       this.points = 0;
     }
 
@@ -23,9 +23,9 @@ class Model {
         lines[pos.y] = lines[pos.y].substring(0,pos.x) + 'p' + lines[pos.y].substring(pos.x+1);
 
         //set Omas
-        lines[this.level.status.y] = lines[this.level.status.y].substring(0,this.level.status.omas) + this.omas +lines[this.level.status.y].substring(this.level.status.omas +1);
+        //lines[this.level.status.y] = lines[this.level.status.y].substring(0,this.level.status.omas) + this.omas +lines[this.level.status.y].substring(this.level.status.omas +1);
         //set points
-        lines[this.level.status.y] = lines[this.level.status.y].substring(0,this.level.status.stand) + this.points +lines[this.level.status.y].substring(this.level.status.stand +this.points.toString().length);
+        //lines[this.level.status.y] = lines[this.level.status.y].substring(0,this.level.status.stand) + this.points +lines[this.level.status.y].substring(this.level.status.stand +this.points.toString().length);
 
         if(this.message != undefined)
         {
@@ -77,10 +77,6 @@ class Model {
         return this.level.start;
     }
 
-    getGoal() {
-        return this.level.goal;
-    }
-
     setPlayer(player)
     {
         this.player = player;
@@ -93,6 +89,13 @@ class Model {
 
     getSources() {
         return this.level.sources;
+    }
+    getMaxBarrels() {
+        return this.level.maxBarrels;
+    }
+
+    getBarrelPosibility() {
+        return this.level.barrelPosibility;
     }
 
     getBarrels()
