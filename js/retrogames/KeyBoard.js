@@ -6,8 +6,14 @@ class KeyBoard {
     }
 
     _identKey(keyCode) {
+        var c = String.fromCharCode(keyCode);
+        //console.log(keyCode+" "+c);
         switch(keyCode)
         {
+            case 13:
+                return 'enter';
+            case 27:
+                return 'esc';
             case 32:
                 return 'jump';
             case 37:
@@ -19,6 +25,11 @@ class KeyBoard {
             case 40:
                 return 'down';
             default:
+                if(c == "P") return 'play';
+                if(c == "L") return 'level';
+                if(c == "I") return 'instruction';
+                if(c == "E") return 'end';
+
                 return undefined;
         }
     }

@@ -1,0 +1,30 @@
+{
+  "name": "robotronretrogames",
+  "version": "0.0.1",
+  "description": "Robotron Retro Games",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha 'test/**/*.js'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dfriedenberger/RobotronRetroGames.git"
+  },
+  "keywords": [
+    "game",
+    "pc1715",
+    "robotron",
+    "leiter",
+    "pilots"
+  ],
+  "author": "Dirk Friedenberger",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dfriedenberger/RobotronRetroGames/issues"
+  },
+  "homepage": "https://github.com/dfriedenberger/RobotronRetroGames#readme",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^8.1.1"
+  }
+}

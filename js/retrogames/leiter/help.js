@@ -1,0 +1,23 @@
+var help_instruction = [
+    "Versuche in diesem Spiel moeglichst viele Omas ueber",
+    "Leitern in das Ziel ($) zu bringen",
+    "",
+    "",
+    "Mit den Steuertasten (&uarr;,&darr;,&larr;,&rarr;,Space) kann die Oma in alle",
+    "Richtungen bewegt werden. Von oben kommen rollende Steine.",
+    "Du musst den Steinen ausweichen, sonst wird die Oma von",
+    "Steinen erschlagen.",    
+    "",
+    "Schafft es die Oma in der Bonus-Zeit nicht",
+    "dann wird sie zerstoert!",    
+    "Fuer 10000 Punkte gibt es eine Oma dazu! Sonderpunkte gibt",
+    "es fuer erreichen eines &-Zeichens.",
+    "",
+    "Und denke daran, viele Wege fuehren nach Rom!",
+    "",
+    "Druecke ESC fuer eine Spielpause",
+    "",
+    "Viel Glueck",
+    "",
+    "Druecke ENTER fuer Hauptmenue"
+];

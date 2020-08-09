@@ -103,9 +103,9 @@ class Model {
         return this.barrels;
     }
 
-    addBarrel(position)
+    addBarrel(barrel)
     {
-        this.barrels.push(position);
+        this.barrels.push(barrel);
     }
 
     deleteBarrels(deleteIt)
@@ -123,3 +123,6 @@ class Model {
         return this.omas;
     }
 }
+
+if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
+    module.exports.Model = Model;

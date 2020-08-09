@@ -33,3 +33,6 @@ class Barrel {
         this.direction = direction;
     }
 }
+
+if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
+    module.exports.Barrel = Barrel;
