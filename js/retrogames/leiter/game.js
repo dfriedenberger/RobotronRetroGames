@@ -15,17 +15,31 @@ $( document ).ready(function() {
     });
 
 
+    var level = [
+        { name: "EasyStreet" , id: level_easystreet },
+        { name: "GhostTown" , id: level_ghosttown },
+        { name: "BugCity" , id: level_bugcity },
+        { name: "GangLand" , id: level_gangland },
+        { name: "IdlePlace" , id: level_idleplace },
+        { name: "LongIsland" , id: level_longisland },
+        { name: "LongWalk" , id: level_longwalk },
+        { name: "OneChance" , id: level_onechance },
+        { name: "Plinko" , id: level_plinko },
+        { name: "PointOfNoReturn" , id: level_pointofnoreturn },
+        { name: "SecretRoad" , id: level_secretroad },
+        { name: "SNP" , id: level_snp },
+        { name: "SNPNotForBeginners" , id: level_snpnotforbeginners },
+        { name: "TunnelVision" , id: level_tunnelvision }
+    ];
+
     var model = undefined;
-    var barrelStrategy = undefined;
+    var barrelStrategy = new BarrelStrategy();
+    var playerStrategy = new PlayerStrategy();
 
     var play_init = function(level)
     {
-
         model = new Model(level);
-        barrelStrategy = new BarrelStrategy(model);
-
         model.setPlayer(new Player(model.getStart()));
-
     };
 
     var play_run = function run()
@@ -33,39 +47,7 @@ $( document ).ready(function() {
 
             screen.printLines(model.getLines());
 
-            function canFallDown(field)
-            {
-                switch(field)
-                {
-                    case ' ':
-                    case '&':
-                            return true;
-                    default:
-                        return false;
-                }
-            }
-            function canMove(field)
-            {
-                switch(field)
-                {
-                    case '':
-                    case '=':
-                        return false;
-                    default:
-                        return true;
-                }
-            }
-            function canMoveUpDown(field)
-            {
-                switch(field)
-                {
-                    case 'H':
-                    case '$':
-                        return true;
-                    default:
-                        return false;
-                }
-            }
+          
 
             function check() {
                 var match = false;
@@ -97,29 +79,10 @@ $( document ).ready(function() {
 
             }
 
-            function canJumpFromPlatform(field)
-            {
-                switch(field)
-                {
-                    case 'H':
-                    case '=':
-                    case '-':
-                        return true;
-                    default:
-                        return false;
-                }
-            }
-            //move person
             var player = model.getPlayer();
             var ppos = player.getPosition();
     
             var field = model.getField(ppos);
-            if(field == '&')
-            {
-                model.setField(ppos,' ');
-                model.addPoints(300);
-            }
-
             if(field == '$')
             {
                 model.setMessage("Gewonnen");
@@ -127,123 +90,11 @@ $( document ).ready(function() {
                 mode = 66;
                 return;
             }
-
-            var platformpos = { x: ppos.x, y: ppos.y + 1};
-            var platformfield = model.getField(platformpos);
-
-            var jump = player.getJumpMode();
-
-            if(jump == undefined)
-            {
-                var nextpos =  { x: ppos.x, y: ppos.y+1 };
-                var nextfield = model.getField(nextpos);
-                if(canFallDown(nextfield))
-                {
-                    //fall down
-                    player.setPosition(nextpos);
-
-                } else {
-
-                    if(keyboard.is('right')) {
-                        var nextpos =  { x: ppos.x + 1, y: ppos.y };
-                        var nextfield = model.getField(nextpos);
-                        if(canMove(nextfield))
-                        {
-                            player.setPosition(nextpos);
-                        }
-                    }
-                    if(keyboard.is('left')) 
-                    {
-                        var nextpos =  { x: ppos.x - 1, y: ppos.y };
-                        var nextfield = model.getField(nextpos);
-                        if(canMove(nextfield))
-                        {
-                            player.setPosition(nextpos);
-                        }
-                    }
-                    if(keyboard.is('up')) 
-                    {
-                        var nextpos =  { x: ppos.x, y: ppos.y - 1};
-                        var nextfield = model.getField(nextpos);
-                        if(canMoveUpDown(nextfield))
-                        {
-                            player.setPosition(nextpos);
-                        }
-                    }
-                    if(keyboard.is('down')) 
-                    {
-                        var nextpos =  { x: ppos.x, y: ppos.y + 1};
-                        var nextfield = model.getField(nextpos);
-                        if(canMoveUpDown(nextfield))
-                        {
-                            player.setPosition(nextpos);
-                        }
-                    }
-                }
-                if(keyboard.is('jump')) 
-                {
-                    if(canJumpFromPlatform(platformfield))
-                    {
-                        jump = {
-                            cnt: 0,
-                            direction: 'up',
-                            pos: { x: 0, y: -1 }
-                        };
-                        if(keyboard.is('right')) jump.pos.x = 1;
-                        if(keyboard.is('left')) jump.pos.x = -1;
-                    }
-                }
-            }
             
-            if(jump != undefined)
-            {
-                var nextpos =  { x: ppos.x + jump.pos.x , y: ppos.y + jump.pos.y};
-                var nextfield = model.getField(nextpos);
-                switch(jump.direction)
-                {
-                    case 'up':
-                        if(canMove(nextfield))
-                        {
-                            player.setPosition(nextpos);
-                            jump.cnt++;
-                            if(jump.cnt > 1)
-                            {
-                                jump.direction = 'down';
-                                jump.pos.y = 1;
-                            }
-                            if(nextfield == 'H')
-                            {
-                                jump = undefined;
-                            }
-                        }
-                        else 
-                            jump = undefined;
-                        break;
-                    case 'down':
-                        if(canFallDown(nextfield))
-                        {
-                            player.setPosition(nextpos);
-                            if(nextfield == 'H')
-                            {
-                                jump = undefined;
-                            }                    
-                        }
-                        else 
-                            jump = undefined;
-                        break;
-                }
-                player.setJumpMode(jump);
-            
-            }
-
-            if(platformfield == '-')
-            {
-                model.setField(platformpos,' ');
-            }
-            
+            playerStrategy.handle(model,keyboard);  
             check();
 
-            barrelStrategy.handle();           
+            barrelStrategy.handle(model);           
 
            
             check();
@@ -264,8 +115,9 @@ $( document ).ready(function() {
 
     };
 
+    var lix = 0;
     var start = new StartScreen("0.0.1");
-    start.setLevel("Easy Street");
+    start.setLevel(level[0].name);
     screen.printLines(start.getLines());
 
     function instruction()
@@ -284,6 +136,12 @@ $( document ).ready(function() {
         {
             mode = 2;
         }
+        if(keyboard.is('level'))
+        {
+            lix = (lix +1)%level.length;
+            start.setLevel(level[lix].name);
+
+        }
         if(keyboard.is('instruction'))
         {
             mode = 99;
@@ -301,7 +159,7 @@ $( document ).ready(function() {
                 main();
                 break;
             case 2:
-                play_init(level_easystreet);
+                play_init(level[lix].id);
                 mode = 3; 
                 //Fallthrough
             case 3:

@@ -1,19 +1,15 @@
 class BarrelStrategy {
 
-    constructor(model) {
-        this.model = model;
-    }
-
-    handle()
+    handle(model)
     {
-        var model = this.model;
         
         function canFallDown(field)
         {
             switch(field)
             {
                 case ' ':
-                    return true;
+                case '^':
+                        return true;
                 default:
                     return false;
             }
